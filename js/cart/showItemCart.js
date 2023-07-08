@@ -150,7 +150,6 @@ function showItemCart() {
             </button>
             <button type="button" class="btn btn-success btn-lg shopping-cart__btn-buy">Mua</button>
         </div>`
-        backToShopping()
         listShoppingCart.innerHTML += `<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
                                             <div class="toast-container toast-container__list-shopping-cart">
                                                 
@@ -208,8 +207,8 @@ function showItemCart() {
         const showItemCart = fullAttrCart.map(handleRenderItemCart)
         cartTable.innerHTML += showItemCart.join('')
         handleClickBuy()
+        backToShopping()
     }
 }
 
 showItemCart()
-backToShopping()
