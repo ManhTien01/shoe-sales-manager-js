@@ -212,3 +212,4 @@ function showItemCart() {
 }
 
 showItemCart()
+backToShopping()
