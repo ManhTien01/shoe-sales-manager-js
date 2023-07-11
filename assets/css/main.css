@@ -264,7 +264,7 @@
 }
 
 .shopping-card__title {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     color: #222222;
     font-weight: 600;
     overflow: hidden;
@@ -274,7 +274,7 @@
 }
 
 .card__quantity {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 500;
 }
 
@@ -310,6 +310,10 @@
     font-size: 1.6rem;
     padding: 12px;
     color: #da4545;
+}
+
+.shopping-cart__btn-buy {
+    font-size: 1.25rem;
 }
 
 .list-shopping-cart {
@@ -381,7 +385,7 @@
     left: 0;
     max-height: 600px;
     width: 512px;
-    overflow-y: scroll;
+    overflow: hidden;
     border: 1px solid #d8d6d6;
     box-shadow: 2px 2px 4px #adabab;
     display: none;

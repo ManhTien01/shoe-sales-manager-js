@@ -13,7 +13,7 @@ const renderOrders = orders => {
                     <tr class="order-item order-item-${item.id} table-card__row">
                         <td scope="row">
         
-                            <div class="cart-text">
+                            <div>
                                 <div>${item.id}</div>
                                 <div class=" bill__detail-wrap">
                                     <div class="text-primary me-1 position-relative">

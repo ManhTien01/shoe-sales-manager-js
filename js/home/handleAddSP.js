@@ -13,22 +13,47 @@ function addSP(id) {
     }
     else {
         const listCartItemsStorage = app.getData(keyLocalStorageItemCart, handleTypeCatingCard)
+        const listSPItemsStorage = app.getData(keyLocalStorageListSP, handleTypeCatingSP)
+        const itemSP = listSPItemsStorage.find(item => item.id === idSP)
         const indexItem = listCartItemsStorage.indexOf(listCartItemsStorage.find(item => item.idSP === idSP));
-        if (indexItem < 0) {
-
-            listCartItemsStorage.push(gioHang)
-            app.saveData(keyLocalStorageItemCart, listCartItemsStorage, handleTypeCatingCard)
-        }
-        else {
-            const arrCart = getbyidSP()
-            item = arrCart.find(item => item.idSP === idSP)
-            const quantity = listCartItemsStorage[indexItem].quantity += 1
-            if (quantity <= item.soLuong) {
+        const toast = `<div class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body text-white">
+                            Đã thêm sản phẩm vào giỏ hàng số lượng x 1.
+                        </div>
+                            <button type="button" class="btn-close me-2 m-auto btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>`
+        if (itemSP.soLuong > 0) {
+            if (indexItem < 0) {
+                showToast(toast, "list-cart")
+                listCartItemsStorage.push(gioHang)
                 app.saveData(keyLocalStorageItemCart, listCartItemsStorage, handleTypeCatingCard)
             }
             else {
-                alert('Số lượng của sản phẩm trong giỏ hàng đã vượt số lượng của sản phẩm!')
+                const arrCart = getbyidSP()
+                const item = arrCart.find(item => item.idSP === idSP)
+                const quantity = listCartItemsStorage[indexItem].quantity += 1
+                if (quantity <= item.soLuong) {
+                    const toast = `<div class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body text-white">
+                            Đã thêm sản phẩm vào giỏ hàng số lượng x ${quantity}.
+                        </div>
+                            <button type="button" class="btn-close me-2 m-auto btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>`
+                    showToast(toast, "list-cart")
+                    app.saveData(keyLocalStorageItemCart, listCartItemsStorage, handleTypeCatingCard)
+                }
+                else {
+                    alert('Số lượng của sản phẩm trong giỏ hàng đã vượt số lượng của sản phẩm!')
+                }
+
             }
+        }
+        else {
+            alert('Sản phẩm đã bán hết, vui lòng chọn sản phẩm khác!')
         }
     }
 
@@ -36,17 +61,6 @@ function addSP(id) {
 
 function handleClickAddSP(e) {
     let productId = e.target.getAttribute('data-id');
-
-    const toast = `<div class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="d-flex">
-                            <div class="toast-body text-white">
-                            Đã thêm sản phẩm vào giỏ hàng.
-                        </div>
-                            <button type="button" class="btn-close me-2 m-auto btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                    </div>`
-
-    showToast(toast, "list-cart")
     addSP(productId)
     getbyidSP()
     showItemCart()

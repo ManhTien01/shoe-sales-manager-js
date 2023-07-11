@@ -97,8 +97,8 @@ Validator.isName = function (selector, message) {
     return {
         selector: selector,
         test: function (value) {
-            const regex = /^[^\d]+$/
-            return regex.test(value) ? undefined : message || 'Vui lòng không nhập chữ số vào trường này!'
+            const regex = /^[^\d\s!@#$%^&*()\-=_+[\]{};':"\\|,.<>/?]*$/
+            return regex.test(value) ? undefined : message || 'Vui lòng không nhập chữ số và kí tự đặc biệt vào trường này!'
         }
     }
 }
