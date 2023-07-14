@@ -40,7 +40,8 @@ Validator({
         const totalQuantity = app.sumArr(arrCards, 'ProductTotal')
         const totalPrice = app.sumArr(arrCards, 'PriceTotal')
         const modal = document.querySelector('.modal')
-
+        const removeToastAddCart = document.querySelector('.toast-container__list-cart')
+        removeToastAddCart.style.display = "none"
         const order = new OrderInfor(
             orderID,
             formattedDate,
@@ -64,23 +65,39 @@ Validator({
                                 <button type="button" class="btn-close me-2 m-auto btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
                             </div>
                          </div>`
-        showToast(toast, "list-shopping-cart")
+        const errorToast = `<div class="toast bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+                         <div class="d-flex">
+                             <div class="toast-body text-white">
+                             Mua hàng thất bại! Vui lòng kiểm tra lại!
+                             </div>
+                             <button type="button" class="btn-close me-2 m-auto btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                         </div>
+                      </div>`
 
-        const arrSPs = app.getData(keyLocalStorageListSP, handleTypeCatingSP)
-        arrSPs.map(arrSP => {
-            arrCards.forEach(arrCard => {
-                if (arrCard.idSP === arrSP.id) {
-                    arrSP.soLuong -= arrCard.quantity
-                }
+        if (!responseApiBill) {
+            showToast(errorToast, "list-shopping-cart")
+        }
+        else {
+
+            showToast(toast, "list-shopping-cart")
+
+            const arrSPs = app.getData(keyLocalStorageListSP, handleTypeCatingSP)
+            arrSPs.map(arrSP => {
+                arrCards.forEach(arrCard => {
+                    if (arrCard.idSP === arrSP.id) {
+                        arrSP.soLuong -= arrCard.quantity
+                    }
+                })
+
             })
+            app.saveData(keyLocalStorageListSP, arrSPs, handleTypeCatingSP)
+            app.saveData(keyLocalStorageItemCart, [])
+            setTimeout(function () {
+                createOrder(order)
+                getOrders(renderOrders);
+            }, 1000)
+        }
 
-        })
-        app.saveData(keyLocalStorageListSP, arrSPs, handleTypeCatingSP)
-        app.saveData(keyLocalStorageItemCart, [])
-        setTimeout(function() {
-            createOrder(order)
-            getOrders(renderOrders);
-        },1000)
 
     }
 })

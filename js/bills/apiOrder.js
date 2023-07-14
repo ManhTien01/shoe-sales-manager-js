@@ -1,5 +1,5 @@
 const ordersApi = 'http://localhost:3000/orders';
-
+let responseApiBill = false
 async function getOrders(callback) {
     try {
         const response = await fetch(ordersApi);
@@ -7,6 +7,7 @@ async function getOrders(callback) {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        responseApiBill = true
         callback(data)
     } catch (error) {
         console.error('Error fetching data:', error);
